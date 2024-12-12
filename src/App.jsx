@@ -9,8 +9,11 @@ import PageNotFound from "./pages/PageNotFound";
 import Users from "./pages/Users";
 import Account from "./pages/Account";
 import AppLayout from "./ui/AppLayout";
+import supabase from "./services/supabase";
 
-function App() {
+async function App() {
+  let { data: cabins, error } = await supabase.from("cabins").select("*");
+  console.log(cabins);
   return (
     <>
       <GlobalStyle />
