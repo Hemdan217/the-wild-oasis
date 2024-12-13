@@ -38,3 +38,38 @@ const Discount = styled.div`
   font-weight: 500;
   color: var(--color-green-700);
 `;
+import React from "react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { deleteCabin } from "../../services/apiCabins";
+
+const CabinRow = ({ cabin }) => {
+  const queryClient = useQueryClient();
+  const { mutate } = useMutation({
+    mutationFn: deleteCabin,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["cabins"] });
+      alert("Cabin deleted");
+    },
+    onError: (err) => {
+      alert("There was an error deleting the cabin");
+    },
+  });
+  return (
+    <>
+      <TableRow>
+        <Img
+          src={
+            "https://dclaevazetcjjkrzczpc.supabase.co/storage/v1/object/public/cabin-images/cabin-004.jpg"
+          }
+        />
+        <Cabin>{cabin?.name}</Cabin>
+        <div>{cabin?.maxCapacity} guests</div>
+        <Price>${cabin?.price}</Price>
+        <Discount>${cabin.discount ?? "-"}</Discount>
+        <button onClick={() => mutate(cabin.id)}>Delete</button>
+      </TableRow>
+    </>
+  );
+};
+
+export default CabinRow;

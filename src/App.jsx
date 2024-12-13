@@ -10,28 +10,48 @@ import Users from "./pages/Users";
 import Account from "./pages/Account";
 import AppLayout from "./ui/AppLayout";
 import supabase from "./services/supabase";
+import { useEffect } from "react";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
-async function App() {
-  let { data: cabins, error } = await supabase.from("cabins").select("*");
-  console.log(cabins);
+function App() {
+  useEffect(() => {
+    (async () => {
+      let { data: cabins, error } = await supabase.from("cabins").select("*");
+      console.log(cabins);
+    })();
+  }, []);
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        staleTime: 60 * 1000,
+      },
+    },
+  });
   return (
     <>
-      <GlobalStyle />
-      <BrowserRouter>
-        <Routes>
-          <Route element={<AppLayout />}>
-            <Route index element={<Navigate to="dashboard" replace={true} />} />
-            <Route path="dashboard" element={<Dashboard />} />
-            <Route path="cabins" element={<Cabins />} />
-            <Route path="bookings" element={<Bookings />} />
-            <Route path="settings" element={<Settings />} />
-            <Route path="users" element={<Users />} />
-            <Route path="account" element={<Account />} />
-            <Route path="login" element={<Login />} />
-            <Route path="*" element={<PageNotFound />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
+      <QueryClientProvider client={queryClient}>
+        <ReactQueryDevtools initialIsOpen={false} />
+        <GlobalStyle />
+        <BrowserRouter>
+          <Routes>
+            <Route element={<AppLayout />}>
+              <Route
+                index
+                element={<Navigate to="dashboard" replace={true} />}
+              />
+              <Route path="dashboard" element={<Dashboard />} />
+              <Route path="cabins" element={<Cabins />} />
+              <Route path="bookings" element={<Bookings />} />
+              <Route path="settings" element={<Settings />} />
+              <Route path="users" element={<Users />} />
+              <Route path="account" element={<Account />} />
+              <Route path="login" element={<Login />} />
+              <Route path="*" element={<PageNotFound />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </QueryClientProvider>
     </>
   );
 }
