@@ -38,13 +38,15 @@ const Discount = styled.div`
   font-weight: 500;
   color: var(--color-green-700);
 `;
-import React from "react";
+import React, { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { deleteCabin } from "../../services/apiCabins";
 import toast from "react-hot-toast";
+import CreateCabinForm from "./CreateCabinForm";
 
 const CabinRow = ({ cabin }) => {
   const queryClient = useQueryClient();
+  const [editMode, setEditMode] = useState(false);
   const { mutate } = useMutation({
     mutationFn: deleteCabin,
     onSuccess: () => {
@@ -67,8 +69,18 @@ const CabinRow = ({ cabin }) => {
         <div>{cabin?.maxCapacity} guests</div>
         <Price>${cabin?.regularPrice ?? "-"}</Price>
         <Discount>${cabin.discount ?? "-"}</Discount>
-        <button onClick={() => mutate(cabin.id)}>Delete</button>
+        <div>
+          <button onClick={() => setEditMode(true)}>Edit</button>
+          <button onClick={() => mutate(cabin.id)}>Delete</button>
+        </div>
       </TableRow>
+      {editMode && (
+        <CreateCabinForm
+          cabin={cabin}
+          id={cabin.id}
+          setEditMode={setEditMode}
+        />
+      )}
     </>
   );
 };
