@@ -60,11 +60,7 @@ const CabinRow = ({ cabin }) => {
   return (
     <>
       <TableRow>
-        <Img
-          src={
-            "https://dclaevazetcjjkrzczpc.supabase.co/storage/v1/object/public/cabin-images/cabin-004.jpg"
-          }
-        />
+        <Img src={cabin?.image} />
         <Cabin>{cabin?.name}</Cabin>
         <div>{cabin?.maxCapacity} guests</div>
         <Price>${cabin?.regularPrice ?? "-"}</Price>
