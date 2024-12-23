@@ -1,3 +1,4 @@
+import AddCabinModal from "../features/cabins/AddCabinModal";
 import CabinTable from "../features/cabins/CabinTable";
 import CreateCabinForm from "../features/cabins/CreateCabinForm";
 import Heading from "../ui/Heading";
@@ -12,7 +13,8 @@ function Cabins() {
       </Row>
       <Row>
         <CabinTable />
-        <CreateCabinForm />
+        {/* <CreateCabinForm /> */}
+        <AddCabinModal />
       </Row>
     </>
   );

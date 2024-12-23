@@ -11,7 +11,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createEditCabin } from "../../services/apiCabins";
 import toast from "react-hot-toast";
 
-function CreateCabinForm({ cabin = {} }) {
+function CreateCabinForm({ cabin = {}, onClose }) {
   const idEditing = cabin?.id;
   const { register, handleSubmit, formState, getValues, reset } = useForm({
     defaultValues: {
@@ -25,6 +25,7 @@ function CreateCabinForm({ cabin = {} }) {
       toast.success("New cabin successfully created");
       reset();
       queryClient.invalidateQueries({ queryKey: ["cabins"] });
+      onClose?.();
     },
     onError: (err) => {
       toast.error(err.message);
@@ -55,7 +56,7 @@ function CreateCabinForm({ cabin = {} }) {
     }
   };
   return (
-    <Form onSubmit={handleSubmit(onSubmit)}>
+    <Form type={onClose && "modal"} onSubmit={handleSubmit(onSubmit)}>
       <FormRow label="Cabin name" error={error?.name?.message}>
         <Input
           type="text"
@@ -121,7 +122,7 @@ function CreateCabinForm({ cabin = {} }) {
 
       <FormRow>
         {/* type is an HTML attribute! */}
-        <Button variation="secondary" type="reset">
+        <Button variation="secondary" type="reset" onClick={onClose}>
           Cancel
         </Button>
         <Button>{idEditing ? "Update cabin" : "Create new cabin"}</Button>

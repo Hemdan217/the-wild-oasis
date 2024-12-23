@@ -43,6 +43,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { deleteCabin } from "../../services/apiCabins";
 import toast from "react-hot-toast";
 import CreateCabinForm from "./CreateCabinForm";
+import Modal from "../../ui/Modal";
 
 const CabinRow = ({ cabin }) => {
   const queryClient = useQueryClient();
@@ -71,11 +72,14 @@ const CabinRow = ({ cabin }) => {
         </div>
       </TableRow>
       {editMode && (
-        <CreateCabinForm
-          cabin={cabin}
-          id={cabin.id}
-          setEditMode={setEditMode}
-        />
+        <Modal onClose={() => setEditMode(false)}>
+          <CreateCabinForm cabin={cabin} onClose={() => setEditMode(false)} />
+        </Modal>
+        // <CreateCabinForm
+        //   cabin={cabin}
+        //   id={cabin.id}
+        //   setEditMode={setEditMode}
+        // />
       )}
     </>
   );

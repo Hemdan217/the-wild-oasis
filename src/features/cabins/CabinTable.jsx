@@ -2,6 +2,8 @@ import { useQuery } from "@tanstack/react-query";
 import styled from "styled-components";
 import { getCabins } from "../../services/apiCabins";
 import CabinRow from "./CabinRow";
+import Modal from "../../ui/Modal";
+import AddCabinModal from "./AddCabinModal";
 
 const Table = styled.div`
   border: 1px solid var(--color-grey-200);
