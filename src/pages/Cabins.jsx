@@ -14,8 +14,8 @@ function Cabins() {
       <Row>
         <CabinTable />
         {/* <CreateCabinForm /> */}
-        <AddCabinModal />
       </Row>
+      <AddCabinModal />
     </>
   );
 }
