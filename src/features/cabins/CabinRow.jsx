@@ -44,12 +44,16 @@ import { deleteCabin } from "../../services/apiCabins";
 import toast from "react-hot-toast";
 import CreateCabinForm from "./CreateCabinForm";
 import Modal from "../../ui/Modal";
+import ConfirmDelete from "../../ui/ConfirmDelete";
+import Menus from "../../ui/Menus";
+import { HiPencil } from "react-icons/hi";
 
 const CabinRow = ({ cabin }) => {
   const queryClient = useQueryClient();
   const [editMode, setEditMode] = useState(false);
-  const { mutate } = useMutation({
+  const { mutate, isLoading: isDeleting } = useMutation({
     mutationFn: deleteCabin,
+
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["cabins"] });
       toast.success("Cabin deleted");
@@ -67,11 +71,59 @@ const CabinRow = ({ cabin }) => {
         <Price>${cabin?.regularPrice ?? "-"}</Price>
         <Discount>${cabin.discount ?? "-"}</Discount>
         <div>
-          <button onClick={() => setEditMode(true)}>Edit</button>
-          <button onClick={() => mutate(cabin.id)}>Delete</button>
+          {/* <button onClick={() => setEditMode(true)}>Edit</button>
+          <button onClick={() => mutate(cabin.id)}>Delete</button> */}
+          <Modal>
+            {/* <Modal.Open open="edit">
+              <button>Edit</button>
+            </Modal.Open>
+            <Modal.Window name="edit">
+              <CreateCabinForm cabin={cabin} />
+            </Modal.Window> */}
+            <Menus>
+              <Menus.Menu>
+                <Menus.Toggle openId={cabin.id}>More</Menus.Toggle>
+                <Menus.List openId={cabin.id}>
+                  <Modal.Open open="edit">
+                    <button>Edit</button>
+                  </Modal.Open>
+                  <Modal.Window name="edit">
+                    <CreateCabinForm cabin={cabin} />
+                  </Modal.Window>
+                  {/* <Modal.Open opens="edit">
+                    <button>
+                      <HiPencil />
+                    </button>
+                  </Modal.Open>
+                  <Modal.Window name="edit">
+                    <CreateCabinForm cabin={cabin} />
+                  </Modal.Window> */}
+                  <Modal.Open open="delete">
+                    <button>Delete</button>
+                    {/* <button onClick={() => setEditMode(true)}>Delete</button> */}
+                  </Modal.Open>
+                  <Modal.Window name="delete">
+                    {/* <div>
+                <p>Are you sure you want to delete this cabin?</p>
+                <button onClick={() => mutate(cabin.id)}>Delete</button>
+              </div> */}
+
+                    <ConfirmDelete
+                      resourceName="cabins"
+                      disabled={isDeleting}
+                      onConfirm={() => mutate(cabin.id)}
+                    />
+                  </Modal.Window>
+                  {/* <Menus.Button>
+                  <button onClick={() => mutate(cabin.id)}>Delete</button>
+                </Menus.Button> */}
+                </Menus.List>
+              </Menus.Menu>
+            </Menus>
+          </Modal>
         </div>
       </TableRow>
-      {editMode && (
+      {/* {editMode && (
         <Modal onClose={() => setEditMode(false)}>
           <CreateCabinForm cabin={cabin} onClose={() => setEditMode(false)} />
         </Modal>
@@ -80,7 +132,7 @@ const CabinRow = ({ cabin }) => {
         //   id={cabin.id}
         //   setEditMode={setEditMode}
         // />
-      )}
+      )} */}
     </>
   );
 };

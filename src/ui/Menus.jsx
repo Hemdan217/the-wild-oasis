@@ -1,3 +1,4 @@
+import { createContext, useState, useContext } from "react";
 import styled from "styled-components";
 
 const StyledMenu = styled.div`
@@ -60,3 +61,58 @@ const StyledButton = styled.button`
     transition: all 0.3s;
   }
 `;
+
+const MenuContext = createContext();
+const Menus = ({ children }) => {
+  const [id, setId] = useState("");
+  const [position, setPosition] = useState({});
+  return (
+    <MenuContext.Provider value={{ id, setId, position, setPosition }}>
+      {children}
+    </MenuContext.Provider>
+  );
+};
+const Menu = ({ children }) => {
+  return <StyledMenu>{children}</StyledMenu>;
+};
+const Toggle = ({ children, openId }) => {
+  const { id, setId, setPosition } = useContext(MenuContext);
+  const handleToggle = (e) => {
+    const rect = e.target.closest("button").getBoundingClientRect();
+    setPosition({
+      x: window.innerWidth - rect.width - rect.x,
+      y: rect.y + rect.height + 8,
+    });
+
+    openId === "" || openId !== id ? setId(id) : setId("");
+    // if (id === "" || id !== openId) {
+    //   setId(openId);
+    //   setPosition({
+    //     x: buttonRect.left, // Distance from the left edge of the viewport
+    //     y: buttonRect.bottom, // Distance from the top edge of the viewport to the bottom of the button
+    //   });
+    // } else {
+    //   setId("");
+    // }
+  };
+
+  return <StyledToggle onClick={handleToggle}>{children}</StyledToggle>;
+};
+const List = ({ children, openId }) => {
+  const { id, position } = useContext(MenuContext);
+  if (id != openId) return null;
+  return <StyledList position={position}>{children}</StyledList>;
+};
+const Button = ({ children }) => {
+  return (
+    <li>
+      <StyledButton>{children}</StyledButton>
+    </li>
+  );
+};
+Menus.Menu = Menu;
+Menus.Toggle = Toggle;
+Menus.List = List;
+Menus.Button = Button;
+
+export default Menus;

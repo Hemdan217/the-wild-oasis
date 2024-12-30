@@ -93,7 +93,8 @@ const Window = ({ children, name }) => {
                 />
               </svg>
             </Button>
-            {children}
+            {/* {children onClick={close}} */}
+            {cloneElement(children, { onClose: close })}
           </StyledModal>
         </Overlay>,
         document.body
