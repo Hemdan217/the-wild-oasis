@@ -40,7 +40,8 @@ const CabinTable = () => {
   let filteredCabins = [...data];
 
   const filter = searchParams.get("discount") || "all";
-  const [field, direction] = searchParams.get("sortBy").split("-");
+  const sortBy = searchParams.get("sortBy") || "";
+  const [field, direction] = sortBy?.split("-");
   const modifier = direction === "asc" ? 1 : -1;
   switch (filter) {
     case "all":
@@ -58,7 +59,10 @@ const CabinTable = () => {
   //   filteredCabins = data.filter((cabin) => cabin?.discount > 0);
   // if (filter == "no-discount")
   //   filteredCabins = data.filter((cabin) => cabin?.discount == 0);
-  filteredCabins.sort((a, b) => (a[field] - b[field]) * modifier);
+
+  if (field) {
+    filteredCabins.sort((a, b) => (a[field] - b[field]) * modifier);
+  }
   return (
     <Table role="table" columns={"0.6fr 1.8fr 2.2fr 1fr 1fr 1fr"}>
       <Table.Header role="rowgroup">

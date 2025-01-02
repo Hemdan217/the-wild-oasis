@@ -5,11 +5,6 @@ import SortBy from "../../ui/SortBy";
 import { useSearchParams } from "react-router-dom";
 
 const CabinTableOperations = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const handleChange = (e) => {
-    searchParams.set("sortBy", e.target.value);
-    setSearchParams(searchParams);
-  };
   return (
     <TableOperations>
       <Filter
@@ -21,8 +16,6 @@ const CabinTableOperations = () => {
         ]}
       />
       <SortBy
-        value={searchParams.get("sortBy") || ""}
-        handleChange={handleChange}
         options={[
           { value: "name-asc", label: "Name A-Z" },
           { value: "name-desc", label: "Name Z-A" },
