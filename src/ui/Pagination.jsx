@@ -1,4 +1,10 @@
 import styled from "styled-components";
+import {
+  IoArrowBackCircleOutline,
+  IoArrowForwardCircleOutline,
+} from "react-icons/io5";
+import { useSearchParams } from "react-router-dom";
+import { PAGE_SIZE } from "../utils/constants";
 
 const StyledPagination = styled.div`
   width: 100%;
@@ -55,3 +61,43 @@ const PaginationButton = styled.button`
     color: var(--color-brand-50);
   }
 `;
+const Pagination = ({ count }) => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  let page = Number(searchParams.get("page")) || 1;
+  const pageCount = Math.ceil(count / PAGE_SIZE);
+  const handlePrev = () => {
+    page = page == 1 ? 1 : page - 1;
+    setSearchParams({ page });
+  };
+  const handleNext = () => {
+    page = page == pageCount ? page : page + 1;
+    setSearchParams({ page });
+  };
+  if (pageCount < 2) {
+    return null;
+  }
+  return (
+    <StyledPagination>
+      <P>
+        Showing{" "}
+        <span>
+          {1 + (page - 1) * PAGE_SIZE}-{" "}
+          {page * PAGE_SIZE > count ? count : page * PAGE_SIZE}
+        </span>{" "}
+        of <span>{count}</span> results
+      </P>
+      <Buttons>
+        <PaginationButton onClick={handlePrev}>
+          <IoArrowBackCircleOutline />
+          <span>Prev</span>
+        </PaginationButton>
+        <PaginationButton onClick={handleNext}>
+          <span>Next</span>
+          <IoArrowForwardCircleOutline />
+        </PaginationButton>
+      </Buttons>
+    </StyledPagination>
+  );
+};
+
+export default Pagination;
