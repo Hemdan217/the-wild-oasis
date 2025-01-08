@@ -14,6 +14,9 @@ import { useEffect } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { Toaster } from "react-hot-toast";
+import BookingDetails from "./pages/BookingDetails";
+import CheckinBooking from "./features/check-in-out/CheckinBooking";
+import Checkin from "./pages/Checkin";
 
 function App() {
   useEffect(() => {
@@ -37,6 +40,8 @@ function App() {
         <GlobalStyle />
         <BrowserRouter>
           <Routes>
+            <Route path="login" element={<Login />} />
+
             <Route element={<AppLayout />}>
               <Route
                 index
@@ -45,10 +50,11 @@ function App() {
               <Route path="dashboard" element={<Dashboard />} />
               <Route path="cabins" element={<Cabins />} />
               <Route path="bookings" element={<Bookings />} />
+              <Route path="bookings/:bookingId" element={<BookingDetails />} />
+              <Route path="checkin/:bookingId" element={<Checkin />} />
               <Route path="settings" element={<Settings />} />
               <Route path="users" element={<Users />} />
               <Route path="account" element={<Account />} />
-              <Route path="login" element={<Login />} />
               <Route path="*" element={<PageNotFound />} />
             </Route>
           </Routes>

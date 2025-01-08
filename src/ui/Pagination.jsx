@@ -67,11 +67,15 @@ const Pagination = ({ count }) => {
   const pageCount = Math.ceil(count / PAGE_SIZE);
   const handlePrev = () => {
     page = page == 1 ? 1 : page - 1;
-    setSearchParams({ page });
+    searchParams.set("page", page);
+    setSearchParams(searchParams);
+    // setSearchParams({ page });
   };
   const handleNext = () => {
     page = page == pageCount ? page : page + 1;
-    setSearchParams({ page });
+    searchParams.set("page", page);
+    setSearchParams(searchParams);
+    // setSearchParams({ page });
   };
   if (pageCount < 2) {
     return null;

@@ -1,8 +1,10 @@
 import React from "react";
-import { Outlet } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 import Header from "./Header";
 import Sidebar from "./Sidebar";
 import styled from "styled-components";
+import useCurrentUser from "../features/authentication/useCurrentUser";
+import Spinner from "./Spinner";
 const StyledLayout = styled.div`
   display: grid;
   grid-template-columns: 26rem 1fr;
@@ -19,6 +21,17 @@ const Container = styled.div`
   margin: 0 auto;
 `;
 const AppLayout = () => {
+  const { user, isLoading } = useCurrentUser();
+  console.log(isLoading);
+  console.log(user);
+  if (isLoading)
+    return (
+      <div className="flex items-center justify-center h-screen w-full">
+        <Spinner />
+      </div>
+    );
+
+  if (user?.role !== "authenticated") return <Navigate to="/login" replace />;
   return (
     <StyledLayout>
       <Header />

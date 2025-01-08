@@ -3,15 +3,13 @@ import Form from "../../ui/Form";
 import FormRow from "../../ui/FormRow";
 import Input from "../../ui/Input";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { getSettings, updateSetting } from "../../services/apiSettings";
+import { updateSetting } from "../../services/apiSettings";
 import toast from "react-hot-toast";
+import useGetSettings from "./useGetSettings";
 
 function UpdateSettingsForm() {
   const queryClient = useQueryClient();
-  const { data = {} } = useQuery({
-    queryKey: ["settings"],
-    queryFn: getSettings,
-  });
+  const { data } = useGetSettings();
   const { mutate } = useMutation({
     mutationFn: ({ update, id }) => updateSetting(update, id),
     onSuccess: () => {

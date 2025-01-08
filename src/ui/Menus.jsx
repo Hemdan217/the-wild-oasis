@@ -28,6 +28,7 @@ const StyledToggle = styled.button`
 
 const StyledList = styled.ul`
   position: fixed;
+  z-index: 1000;
 
   background-color: var(--color-grey-0);
   box-shadow: var(--shadow-md);
@@ -84,7 +85,7 @@ const Toggle = ({ children, openId }) => {
       y: rect.y + rect.height + 8,
     });
 
-    openId === "" || openId !== id ? setId(id) : setId("");
+    openId === "" || openId !== id ? setId(openId) : setId("");
     // if (id === "" || id !== openId) {
     //   setId(openId);
     //   setPosition({
@@ -103,10 +104,13 @@ const List = ({ children, openId }) => {
   if (id != openId) return null;
   return <StyledList position={position}>{children}</StyledList>;
 };
-const Button = ({ children }) => {
+const Button = ({ children, onClick, icon }) => {
   return (
     <li>
-      <StyledButton>{children}</StyledButton>
+      <StyledButton onClick={onClick}>
+        <span>{icon}</span>
+        {children}
+      </StyledButton>
     </li>
   );
 };

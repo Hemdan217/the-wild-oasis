@@ -39,12 +39,14 @@ const Filter = ({ field, options }) => {
   const currentValue = searchParams.get(field);
   const hanldeFilter = (value) => {
     searchParams.set(field, value);
+    if (searchParams.get("page")) searchParams.set("page", 1);
     setSearchParams(searchParams);
   };
   return (
     <StyledFilter>
       {options.map(({ label, value }) => (
         <FilterButton
+          key={value}
           onClick={(e) => hanldeFilter(value)}
           active={currentValue == value}
           disabled={currentValue == value}
