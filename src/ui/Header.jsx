@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import Heading from "./Heading";
+import HeaderMenu from "./HeaderMenu";
 const StyledHeader = styled.header`
   padding: 1.2rem 2.4rem;
   background-color: var(--color-grey-50);
@@ -10,7 +10,7 @@ const Header = () => {
   return (
     <>
       <StyledHeader>
-        <Heading as="h2">Header of the website</Heading>
+        <HeaderMenu />
       </StyledHeader>
     </>
   );

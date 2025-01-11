@@ -19,3 +19,14 @@ const Avatar = styled.img`
   border-radius: 50%;
   outline: 2px solid var(--color-grey-100);
 `;
+
+const UserAvatar = ({ user }) => {
+  const src = user?.avatar ? user?.avatar : "default-user.jpg";
+  return (
+    <StyledUserAvatar>
+      <Avatar src={src} alt={` profile picture`} />
+    </StyledUserAvatar>
+  );
+};
+
+export default UserAvatar;
