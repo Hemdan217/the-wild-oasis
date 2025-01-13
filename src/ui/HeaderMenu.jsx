@@ -6,6 +6,7 @@ import { MdOutlineLogout } from "react-icons/md";
 import ButtonIcon from "./ButtonIcon";
 import SpinnerMini from "./SpinnerMini";
 import useLogout from "../features/authentication/useLogout";
+import { Link } from "react-router-dom";
 const StyledHeaderMenu = styled.ul`
   display: flex;
   gap: 2.4rem;
@@ -18,9 +19,11 @@ const HeaderMenu = () => {
   return (
     <StyledHeaderMenu>
       <li>
-        <UserAvatar user={user} />
+        <Link to="/account">
+          <UserAvatar user={user} />
+        </Link>
       </li>
-      <li>{user.app_metadata?.fullName || "Hemdan"}</li>
+      <li>{user.user_metadata?.fullName || "Hemdan"}</li>
       <li>
         <ButtonIcon onClick={logout} disabled={isLoading}>
           {isLoading ? <SpinnerMini /> : <MdOutlineLogout />}

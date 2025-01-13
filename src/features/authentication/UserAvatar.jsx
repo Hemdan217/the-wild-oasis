@@ -21,7 +21,9 @@ const Avatar = styled.img`
 `;
 
 const UserAvatar = ({ user }) => {
-  const src = user?.avatar ? user?.avatar : "default-user.jpg";
+  const src = user?.user_metadata?.avatar
+    ? user?.user_metadata?.avatar
+    : "default-user.jpg";
   return (
     <StyledUserAvatar>
       <Avatar src={src} alt={` profile picture`} />
