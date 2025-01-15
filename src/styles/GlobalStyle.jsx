@@ -41,7 +41,46 @@ const GlobalStyles = createGlobalStyle`
     --image-grayscale: 0;
   --image-opacity: 100%;
   }
-  
+  &.monochrome-mode {
+  --color-grey-0: #f5f5f5;
+  --color-grey-50: #ebebeb;
+  --color-grey-100: #d6d6d6;
+  --color-grey-200: #bfbfbf;
+  --color-grey-300: #a5a5a5;
+  --color-grey-400: #8b8b8b;
+  --color-grey-500: #707070;
+  --color-grey-600: #565656;
+  --color-grey-700: #3d3d3d;
+  --color-grey-800: #242424;
+  --color-grey-900: #121212;
+
+  --color-brand-50: #ebebeb;
+  --color-brand-100: #d6d6d6;
+  --color-brand-200: #bfbfbf;
+  --color-brand-500: #707070;
+  --color-brand-600: #565656;
+  --color-brand-700: #3d3d3d;
+  --color-brand-800: #242424;
+  --color-brand-900: #121212;
+
+  --color-blue-100: #d6d6d6;
+  --color-blue-700: #707070;
+  --color-green-100: #d6d6d6;
+  --color-green-700: #707070;
+  --color-yellow-100: #d6d6d6;
+  --color-yellow-700: #707070;
+  --color-red-100: #d6d6d6;
+  --color-red-700: #707070;
+
+  --backdrop-color: rgba(100, 100, 100, 0.3);
+  --shadow-sm: 0 1px 2px rgba(50, 50, 50, 0.4);
+  --shadow-md: 0px 0.6rem 2.4rem rgba(50, 50, 50, 0.3);
+  --shadow-lg: 0 2.4rem 3.2rem rgba(50, 50, 50, 0.4);
+
+  --image-grayscale: 100%;
+  --image-opacity: 100%;
+}
+
   &.dark-mode {
     --color-grey-0: #18212f;
 --color-grey-50: #111827;

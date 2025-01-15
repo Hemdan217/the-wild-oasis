@@ -11,22 +11,28 @@ const ThemeProvider = ({ children }) => {
 
   useEffect(
     function () {
-      if (isDarkMode) {
+      if (isDarkMode === "dark") {
         document.documentElement.classList.add("dark-mode");
+        document.documentElement.classList.remove("monochrome-mode");
         document.documentElement.classList.remove("light-mode");
+      } else if (isDarkMode === "monochrome") {
+        document.documentElement.classList.add("monochrome-mode");
+        document.documentElement.classList.remove("light-mode");
+        document.documentElement.classList.remove("dark-mode");
       } else {
         document.documentElement.classList.add("light-mode");
+        document.documentElement.classList.remove("monochrome-mode");
         document.documentElement.classList.remove("dark-mode");
       }
     },
     [isDarkMode]
   );
 
-  function toggleDarkMode() {
-    setIsDarkMode((isDark) => !isDark);
-  }
+  //   function toggleDarkMode() {
+  //     setIsDarkMode((isDark) => !isDark);
+  //   }
   return (
-    <DarkModeContext.Provider value={{ isDarkMode, toggleDarkMode }}>
+    <DarkModeContext.Provider value={{ isDarkMode, setMode: setIsDarkMode }}>
       {children}
     </DarkModeContext.Provider>
   );

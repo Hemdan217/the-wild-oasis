@@ -9,7 +9,7 @@ import useLogout from "../features/authentication/useLogout";
 import { Link } from "react-router-dom";
 
 import { useDarkMode } from "../context/DarkModeContext";
-import { FaSun, FaMoon } from "react-icons/fa";
+import { FaSun, FaMoon, FaPalette } from "react-icons/fa";
 
 const StyledHeaderMenu = styled.ul`
   display: flex;
@@ -17,10 +17,12 @@ const StyledHeaderMenu = styled.ul`
   justify-content: flex-end;
   align-items: center;
 `;
+
 const HeaderMenu = () => {
   const { user } = useCurrentUser();
   const { logout, isLoading } = useLogout();
-  const { isDarkMode, toggleDarkMode } = useDarkMode();
+  const { isDarkMode, setMode } = useDarkMode();
+
   return (
     <StyledHeaderMenu>
       <li>
@@ -29,14 +31,52 @@ const HeaderMenu = () => {
         </Link>
       </li>
       <li>{user.user_metadata?.fullName || "Hemdan"}</li>
-      <li className>
-        <ButtonIcon onClick={toggleDarkMode}>
-          {isDarkMode ? <FaSun /> : <FaMoon />}
+      <li>
+        <ButtonIcon
+          onClick={() =>
+            isDarkMode === "dark" ? setMode("light") : setMode("dark")
+          }
+        >
+          {isDarkMode ? (
+            <FaSun
+              size={24}
+              color={
+                isDarkMode === "monochrome" ? "rgb(44, 42, 33)" : "#fbbf24"
+              } // Vibrant yellow for light mode
+            />
+          ) : (
+            <FaMoon
+              size={24}
+              color={
+                isDarkMode === "monochrome" ? "rgb(44, 42, 33)" : "#94a3b8"
+              } // Soft gray-blue for dark mode
+            />
+          )}
+        </ButtonIcon>
+      </li>
+      <li>
+        <ButtonIcon
+          onClick={() =>
+            isDarkMode === "monochrome"
+              ? setMode("light")
+              : setMode("monochrome")
+          }
+        >
+          <FaPalette
+            size={24}
+            color={isDarkMode === "monochrome" ? "rgb(44, 42, 33)" : "#38bdf8"}
+          />{" "}
+          {/* Bright blue for monochrome mode */}
         </ButtonIcon>
       </li>
       <li>
         <ButtonIcon onClick={logout} disabled={isLoading}>
-          {isLoading ? <SpinnerMini /> : <MdOutlineLogout />}
+          {isLoading ? (
+            <SpinnerMini />
+          ) : (
+            <MdOutlineLogout size={24} color="#6b7280" />
+          )}{" "}
+          {/* Neutral gray for logout */}
         </ButtonIcon>
       </li>
     </StyledHeaderMenu>
