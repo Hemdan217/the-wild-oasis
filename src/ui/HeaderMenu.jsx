@@ -7,6 +7,10 @@ import ButtonIcon from "./ButtonIcon";
 import SpinnerMini from "./SpinnerMini";
 import useLogout from "../features/authentication/useLogout";
 import { Link } from "react-router-dom";
+
+import { useDarkMode } from "../context/DarkModeContext";
+import { FaSun, FaMoon } from "react-icons/fa";
+
 const StyledHeaderMenu = styled.ul`
   display: flex;
   gap: 2.4rem;
@@ -16,6 +20,7 @@ const StyledHeaderMenu = styled.ul`
 const HeaderMenu = () => {
   const { user } = useCurrentUser();
   const { logout, isLoading } = useLogout();
+  const { isDarkMode, toggleDarkMode } = useDarkMode();
   return (
     <StyledHeaderMenu>
       <li>
@@ -24,6 +29,11 @@ const HeaderMenu = () => {
         </Link>
       </li>
       <li>{user.user_metadata?.fullName || "Hemdan"}</li>
+      <li className>
+        <ButtonIcon onClick={toggleDarkMode}>
+          {isDarkMode ? <FaSun /> : <FaMoon />}
+        </ButtonIcon>
+      </li>
       <li>
         <ButtonIcon onClick={logout} disabled={isLoading}>
           {isLoading ? <SpinnerMini /> : <MdOutlineLogout />}
